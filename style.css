@@ -23,64 +23,67 @@ body {
 }
 
 #calculator {
-	background-color: rgb(31, 37, 62);
+	background-color: rgb(48, 52, 65);
 	height: 40em;
-	min-width: 25em;
+	min-width: 30em;
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
-	padding: 0.5em;
+	padding: 1em;
+    gap: 1em
 }
 
 #display {
 	background-color: aliceblue;
-	height: 10em;
-	margin: 1em;
+    box-sizing: border-box;
+	height: 120px;
 	border-radius: 5px;
+    padding: 0.5em;
+    font-weight: 100;
 }
 
-#functions,
-#keypad {
-	margin: 1em;
-	display: flex;
-	justify-content: center;
-	gap: 1.5em;
-}
-
-#functions {
-	height: 4.5em;
-}
-
-.functions {
-	flex-grow: 1;
-}
-
-#keypad {
-	display: flex;
+#keypad, #functions{
     flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5em;
 }
 
-#numbers,
-#operators {
-	display: grid;
-	gap: 1em;
+#functions{
+    grid-template-columns: repeat(2, 1fr);
 }
 
-#operators {
-	flex-grow: 1;
-	grid-template-columns: 1fr;
+.threeColumn{
+    grid-column: 3 span;
 }
-#numbers {
-	flex-grow: 3;
-	grid-template-columns: 1fr 1fr 1fr;
+
+.twoColumn{
+    grid-column: 2 span;
+}
+
+#entry{
+    font-size: 2em;
+}
+
+#result{
+    font-size: 4em;
+    text-align: right;
+}
+
+.function {
+	background-color: rgb(251, 100, 145);
+}
+
+.op, #calc{
+    background-color: rgb(130, 100, 251);
 }
 
 button {
-	font-size: 1.3em;
+	font-size: 1.3rem;
 	background-color: rgb(251, 163, 100);
 	color: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0); 
-	border-radius: 20px;
+	border-radius: 15px;
 	padding: 0.5em;
 }
 
