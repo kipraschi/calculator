@@ -1,0 +1,90 @@
+* {
+	font-family: "Roboto", monospace;
+	font-weight: bolder;
+	margin: 0;
+	border: 0;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+    background-color:#affcd877;
+    background-image:
+    radial-gradient(at 12% 40%, hsla(280,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 7% 92%, hsla(196,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 50% 44%, hsla(190,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 97% 0%, hsla(351,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 34% 55%, hsla(79,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 13% 1%, hsla(274,27%,100%,1) 0px, transparent 50%),
+    radial-gradient(at 10% 20%, hsla(276,27%,100%,1) 0px, transparent 50%);
+}
+
+#calculator {
+	background-color: rgb(31, 37, 62);
+	max-height: 60em;
+	width: 25em;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	padding: 0.5em;
+}
+
+#display {
+	background-color: aliceblue;
+	height: 10em;
+	margin: 1em;
+	border-radius: 5px;
+}
+
+#functions,
+#keypad {
+	margin: 1em;
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
+
+#functions {
+	height: 5em;
+}
+
+.functions {
+	flex-grow: 1;
+}
+
+#keypad {
+	display: flex;
+}
+
+#numbers,
+#operators {
+	display: grid;
+	gap: 1em;
+}
+
+#operators {
+	flex-grow: 1;
+	grid-template-columns: 1fr;
+}
+#numbers {
+	flex-grow: 3;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+button {
+	font-size: 1.3em;
+	background-color: rgb(255, 174, 117);
+	color: rgb(255, 255, 255);
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 0.5em;
+}
+
+button:hover {
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    background-color: rgb(253, 187, 139);
+    cursor: pointer;
+}
