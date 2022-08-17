@@ -1,4 +1,23 @@
 //operations
+function calculate(firstNumber, operator, secondNumber) {
+	switch (operator) {
+		case "/":
+			return secondNumber == 0
+				? alert("Can't do that!")
+				: divide([firstNumber, secondNumber]);
+			break;
+		case "×":
+			return multiply([firstNumber, secondNumber]);
+			break;
+		case "-":
+			return subtract([firstNumber, secondNumber]);
+			break;
+		case "+":
+			return add([firstNumber, secondNumber]);
+			break;
+	}
+}
+
 function add(numbers) {
 	return numbers.reduce((result, number) => (result += +number), 0);
 }
@@ -8,10 +27,35 @@ function subtract(numbers) {
 function divide(numbers) {
 	return parseFloat(
 		numbers.reduce((result, number) => (result /= +number))
-	).toFixed(4);
+	).toPrecision(5);
 }
 function multiply(numbers) {
 	return numbers.reduce((result, number) => (result *= +number));
+}
+
+//calculation
+let answer = null;
+document.getElementById("calc").addEventListener("click", operate);
+
+function operate() {
+	let operators = [/[×/]/, /[+\-]/]; //array of operators, * and / first, then + and -
+	let entryGrouped = entry.join("").split(/([/×+\-])/);
+
+	for (let j = 0; j < operators.length; j++) {
+		for (let i = 0; i < entryGrouped.length; i++) {
+			let firstNumber = answer === null ? entryGrouped[i - 1] : answer;
+			let element = entryGrouped[i];
+			let secondNumber = entryGrouped[i + 1];
+            console.log(`Array: ${entryGrouped}`);
+			if (operators[j].test(element)) { //if element is an operator, 
+				answer = calculate(firstNumber, element, secondNumber);
+				entryGrouped.splice(i - 1, 3, answer);
+				i = 0;
+			    console.log(`Result of loop: ${answer}`);
+			}
+		}
+	}
+	displayResult(answer);
 }
 
 //display
@@ -26,10 +70,9 @@ Array.from(allButtons).forEach((button) => {
 	button.addEventListener("click", () => {
 		if (isResultDisplayed) {
 			clearEntry();
-			if (button.classList[1] == "num")
-				answer = null;
+			if (button.classList[1] == "num") answer = null;
 			isResultDisplayed = false;
-		};
+		}
 		displayEntry(button.textContent);
 	});
 });
@@ -46,7 +89,7 @@ function clear() {
 	clearEntry();
 	document.getElementById("result").textContent = "";
 	answer = null;
-    isResultDisplayed = false;
+	isResultDisplayed = false;
 }
 
 function clearEntry() {
@@ -55,56 +98,3 @@ function clearEntry() {
 }
 
 //delete
-
-//calculation
-let answer = null;
-document.getElementById("calc").addEventListener("click", operate);
-
-function operate() {
-	let operatorList = /[/×+\-]/;
-	let prioritizedOperators = /[*/]/;
-	let numbers = entry.join("").split(operatorList);
-	let entryGrouped = entry.join("").split(/([/×+\-])/); //array with digits grouped into numbers
-	
-    // if entryGrouped contains * or /
-	// make entrySorted that is a copy of entry
-	// but with the operator and numbers surrounded by it
-	// entryGrouped[entryGrouped.indexOf(operator) - 1] and entryGrouped[entryGrouped.indexOf(operator) + 1]
-	// moved to the front of the array
-
-	let operators = entry.filter((symbol) => operatorList.test(symbol));
-	// console.log(entry);
-	// console.log(operators);
-	// console.log(numbers);
-	let pairIndex = 0;
-	operators.forEach((operator) => {
-		let firstNumber;
-		answer === null
-			? (firstNumber = numbers[pairIndex])
-			: (firstNumber = answer);
-		let secondNumber = numbers[pairIndex + 1];
-
-		switch (operator) {
-			case "/":
-				secondNumber == 0
-					? alert("Can't do that!")
-					: (answer = divide([firstNumber, secondNumber]));
-				break;
-			case "×":
-				answer = multiply([firstNumber, secondNumber]);
-				break;
-			case "-":
-				answer = subtract([firstNumber, secondNumber]);
-				break;
-			case "+":
-				answer = add([firstNumber, secondNumber]);
-				break;
-		}
-
-		pairIndex++;
-		console.log(
-			`First: ${firstNumber} Second: ${secondNumber} Operator: ${operator} Result: ${answer}`
-		);
-	});
-	displayResult(answer);
-}
