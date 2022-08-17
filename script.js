@@ -1,4 +1,22 @@
 //operations
+function add(numbers) {
+	return numbers.reduce((result, number) => (result += +number), 0);
+}
+function subtract(numbers) {
+	return numbers.reduce((result, number) => (result -= +number));
+}
+function multiply(numbers) {
+	return numbers.reduce((result, number) => (result *= +number));
+}
+function divide(numbers) {
+	return round(
+		numbers.reduce((result, number) => (result /= +number)),
+		5
+	);
+}
+function round(number, maxPrecision) {
+	return parseFloat(Math.round(number + "e" + maxPrecision) + "e-" + maxPrecision);
+}
 function calculate(firstNumber, operator, secondNumber) {
 	switch (operator) {
 		case "/":
@@ -18,27 +36,12 @@ function calculate(firstNumber, operator, secondNumber) {
 	}
 }
 
-function add(numbers) {
-	return numbers.reduce((result, number) => (result += +number), 0);
-}
-function subtract(numbers) {
-	return numbers.reduce((result, number) => (result -= +number));
-}
-function divide(numbers) {
-	return parseFloat(
-		numbers.reduce((result, number) => (result /= +number))
-	).toPrecision(5);
-}
-function multiply(numbers) {
-	return numbers.reduce((result, number) => (result *= +number));
-}
-
 //calculation
 let answer = null;
 document.getElementById("calc").addEventListener("click", operate);
 
 function operate() {
-	let operators = [/[×/]/, /[+\-]/]; //array of operators, * and / first, then + and -
+	let operators = [/[×/]/, /[+\-]/];
 	let entryGrouped = entry.join("").split(/([/×+\-])/);
 
 	for (let j = 0; j < operators.length; j++) {
@@ -46,12 +49,12 @@ function operate() {
 			let firstNumber = answer === null ? entryGrouped[i - 1] : answer;
 			let element = entryGrouped[i];
 			let secondNumber = entryGrouped[i + 1];
-            console.log(`Array: ${entryGrouped}`);
-			if (operators[j].test(element)) { //if element is an operator, 
+			console.log(`Array: ${entryGrouped}`);
+			if (operators[j].test(element)) {
 				answer = calculate(firstNumber, element, secondNumber);
 				entryGrouped.splice(i - 1, 3, answer);
 				i = 0;
-			    console.log(`Result of loop: ${answer}`);
+				console.log(`Result of loop: ${answer}`);
 			}
 		}
 	}
