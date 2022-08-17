@@ -26,13 +26,10 @@ Array.from(allButtons).forEach((button) => {
 	button.addEventListener("click", () => {
 		if (isResultDisplayed) {
 			clearEntry();
-            if(button.className == "num")
-            {
-                answer = null;
-                console.log(answer);
-            }
+			if (button.classList[1] == "num")
+				answer = null;
 			isResultDisplayed = false;
-		}
+		};
 		displayEntry(button.textContent);
 	});
 });
@@ -49,6 +46,7 @@ function clear() {
 	clearEntry();
 	document.getElementById("result").textContent = "";
 	answer = null;
+    isResultDisplayed = false;
 }
 
 function clearEntry() {
@@ -64,15 +62,17 @@ document.getElementById("calc").addEventListener("click", operate);
 
 function operate() {
 	let operatorList = /[/×+\-]/;
-    let prioritizedOperators = /[*/]/;
+	let prioritizedOperators = /[*/]/;
 	let numbers = entry.join("").split(operatorList);
-    // if entry contains * or /
-    // make entrySorted that is a copy of entry 
-    // but with the operator and numbers surrounded by it
-    // entry[entry.indexOf(operator) - 1] and entry[entry.indexOf(operator) + 1]
-    // moved to the front of the array
+	let entryGrouped = entry.join("").split(/([/×+\-])/); //array with digits grouped into numbers
+	
+    // if entryGrouped contains * or /
+	// make entrySorted that is a copy of entry
+	// but with the operator and numbers surrounded by it
+	// entryGrouped[entryGrouped.indexOf(operator) - 1] and entryGrouped[entryGrouped.indexOf(operator) + 1]
+	// moved to the front of the array
 
-    let operators = entry.filter((symbol) => operatorList.test(symbol));
+	let operators = entry.filter((symbol) => operatorList.test(symbol));
 	// console.log(entry);
 	// console.log(operators);
 	// console.log(numbers);
@@ -84,11 +84,11 @@ function operate() {
 			: (firstNumber = answer);
 		let secondNumber = numbers[pairIndex + 1];
 
-        switch (operator) {
+		switch (operator) {
 			case "/":
-                (secondNumber == 0) ?
-                alert("Can't do that!") :
-				answer = divide([firstNumber, secondNumber]);
+				secondNumber == 0
+					? alert("Can't do that!")
+					: (answer = divide([firstNumber, secondNumber]));
 				break;
 			case "×":
 				answer = multiply([firstNumber, secondNumber]);
