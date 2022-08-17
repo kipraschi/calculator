@@ -73,21 +73,33 @@ body {
 .function {
 	background-color: rgb(251, 100, 145);
 }
+.function:hover {
+	background-color: rgb(255, 130, 167);
+}
 
-.op, #calc{
+
+.op{
     background-color: rgb(130, 100, 251);
+}
+.op:hover, .op:disabled{
+    background-color: rgb(149, 124, 252);
+}
+
+.num, #dot{
+	background-color: rgb(251, 163, 100);
+}
+.num:hover, #dot:hover, #dot:disabled{ 
+	background-color: rgb(255, 189, 141);
 }
 
 button {
 	font-size: 2rem;
-	background-color: rgb(251, 163, 100);
 	color: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0); 
 	border-radius: 15px;
 }
 
 button:hover {
-	background-color: rgb(255, 189, 141);
     cursor: pointer;
 }
 
