@@ -1,4 +1,4 @@
-//operations
+//OPERATIONS
 function add(numbers) {
 	return numbers.reduce((result, number) => (result += +number), 0);
 }
@@ -12,12 +12,14 @@ function multiply(numbers) {
 function divide(numbers) {
 	return round(
 		// numbers.reduce((result, number) => (result /= +number)),
-        numbers[0] / numbers[1],
+		numbers[0] / numbers[1],
 		10
 	);
 }
 function round(number, maxPrecision) {
-	return parseFloat(Math.round(number + "e" + maxPrecision) + "e-" + maxPrecision);
+	return parseFloat(
+		Math.round(number + "e" + maxPrecision) + "e-" + maxPrecision
+	);
 }
 function calculate(firstNumber, operator, secondNumber) {
 	switch (operator) {
@@ -38,7 +40,7 @@ function calculate(firstNumber, operator, secondNumber) {
 	}
 }
 
-//calculation
+//CALCULATION
 let answer = null;
 document.getElementById("calc").addEventListener("click", operate);
 
@@ -63,16 +65,24 @@ function operate() {
 	displayResult(answer);
 }
 
-//display
+//DISPLAY
 let entry = [];
 function displayEntry(char) {
-    if(entry.length <= 20){
-        entry.push(char);
-        document.getElementById("entry").textContent = entry.join("");
-    }
-	else document.getElementById("entry").textContent = "Error";
+	if (entry.length <= 20) {
+		entry.push(char);
+		document.getElementById("entry").textContent = entry.join("");
+	} else document.getElementById("entry").textContent = "Error";
 }
 
+let isResultDisplayed = false;
+function displayResult(result) {
+	if (result.toString().length <= 10) {
+		document.getElementById("result").textContent = result;
+	} else document.getElementById("result").textContent = "Error";
+	isResultDisplayed = true;
+}
+
+//BUTTON BEHAVIOR
 let allButtons = document.getElementsByClassName("key");
 Array.from(allButtons).forEach((button) => {
 	button.addEventListener("click", () => {
@@ -85,22 +95,53 @@ Array.from(allButtons).forEach((button) => {
 	});
 });
 
-let isResultDisplayed = false;
-function displayResult(result) {
-    if(result.toString().length <= 10){
-        document.getElementById("result").textContent = result;
-    }
-	else document.getElementById("result").textContent = "Error";
-	isResultDisplayed = true;
+//disable dot button
+let dotButton = document.getElementById("dot");
+let opButtons = document.getElementsByClassName("key op");
+let numButtons = document.getElementsByClassName("key num");
+
+dotButton.addEventListener("click", () => (dotButton.disabled = true));
+enableButton(dotButton, opButtons);
+
+Array.from(opButtons).forEach((button) => {
+	button.addEventListener("click", () => {
+		Array.from(opButtons).forEach((button) => {
+			button.disabled = true;
+		});
+		button.style.backgroundColor = "rgb(149, 124, 252)";
+	});
+});
+enableButton(opButtons, numButtons);
+
+function enableButton(disabledButtons, enablers) {
+	if (disabledButtons.length > 1) {
+		Array.from(enablers).forEach((enabler) =>
+			enabler.addEventListener("click", () =>
+				Array.from(disabledButtons).forEach((button) => {
+					button.disabled = false;
+					button.style.backgroundColor = "";
+				})
+			)
+		);
+	} else {
+        console.log("disabling the one fucker");
+		Array.from(enablers).forEach((enabler) =>
+			enabler.addEventListener(
+				"click",
+				() => (disabledButtons.disabled = false)
+			)
+		);
+	}
 }
 
-//clear
+//CLEAR
 document.getElementById("clear").addEventListener("click", clear);
 function clear() {
 	clearEntry();
 	document.getElementById("result").textContent = "";
 	answer = null;
 	isResultDisplayed = false;
+	Array.from(allButtons).forEach((button) => (button.disabled = false));
 }
 
 function clearEntry() {
@@ -108,4 +149,6 @@ function clearEntry() {
 	entry = [];
 }
 
-//delete
+//DELETE
+document.getElementById("delete").addEventListener("click", clear);
+
