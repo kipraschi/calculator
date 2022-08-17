@@ -77,10 +77,10 @@ body {
 	background-color: rgb(255, 130, 167);
 }
 
-.op{
+.op, #calc{
     background-color: rgb(130, 100, 251);
 }
-.op:hover, .op:disabled{
+.op:hover, .op:disabled, #calc:hover{
     background-color: rgb(149, 124, 252);
 }
 
