@@ -6,12 +6,14 @@ function subtract(numbers) {
 	return numbers.reduce((result, number) => (result -= +number));
 }
 function multiply(numbers) {
-	return numbers.reduce((result, number) => (result *= +number));
+	return numbers[0] * numbers[1];
+	// return numbers.reduce((result, number) => (result *= +number));
 }
 function divide(numbers) {
 	return round(
-		numbers.reduce((result, number) => (result /= +number)),
-		5
+		// numbers.reduce((result, number) => (result /= +number)),
+        numbers[0] / numbers[1],
+		10
 	);
 }
 function round(number, maxPrecision) {
@@ -64,8 +66,11 @@ function operate() {
 //display
 let entry = [];
 function displayEntry(char) {
-	entry.push(char);
-	document.getElementById("entry").textContent = entry.join("");
+    if(entry.length <= 20){
+        entry.push(char);
+        document.getElementById("entry").textContent = entry.join("");
+    }
+	else document.getElementById("entry").textContent = "Error";
 }
 
 let allButtons = document.getElementsByClassName("key");
@@ -82,7 +87,10 @@ Array.from(allButtons).forEach((button) => {
 
 let isResultDisplayed = false;
 function displayResult(result) {
-	document.getElementById("result").textContent = result;
+    if(result.toString().length <= 10){
+        document.getElementById("result").textContent = result;
+    }
+	else document.getElementById("result").textContent = "Error";
 	isResultDisplayed = true;
 }
 
