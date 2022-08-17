@@ -79,12 +79,11 @@ body {
 }
 
 button {
-	font-size: 1.3rem;
+	font-size: 2rem;
 	background-color: rgb(251, 163, 100);
 	color: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0); 
 	border-radius: 15px;
-	padding: 0.5em;
 }
 
 button:hover {
