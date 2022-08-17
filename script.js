@@ -1,18 +1,20 @@
 //OPERATIONS
 function add(numbers) {
 	return numbers.reduce((result, number) => (result += +number), 0);
+	// return +numbers[0] + +numbers[1];
 }
 function subtract(numbers) {
 	return numbers.reduce((result, number) => (result -= +number));
+	// return numbers[0] - numbers[1];
 }
 function multiply(numbers) {
-	return numbers[0] * numbers[1];
-	// return numbers.reduce((result, number) => (result *= +number));
+	// return numbers[0] * numbers[1];
+	return numbers.reduce((result, number) => (result *= +number));
 }
 function divide(numbers) {
 	return round(
-		// numbers.reduce((result, number) => (result /= +number)),
-		numbers[0] / numbers[1],
+		numbers.reduce((result, number) => (result /= +number)),
+		// numbers[0] / numbers[1],
 		10
 	);
 }
@@ -69,7 +71,7 @@ function operate() {
 let entry = [];
 function displayEntry(char) {
 	if (entry.length <= 20) {
-		entry.push(char);
+		if (char != "") entry.push(char);
 		document.getElementById("entry").textContent = entry.join("");
 	} else document.getElementById("entry").textContent = "Error";
 }
@@ -124,7 +126,6 @@ function enableButton(disabledButtons, enablers) {
 			)
 		);
 	} else {
-        console.log("disabling the one fucker");
 		Array.from(enablers).forEach((enabler) =>
 			enabler.addEventListener(
 				"click",
@@ -150,5 +151,10 @@ function clearEntry() {
 }
 
 //DELETE
-document.getElementById("delete").addEventListener("click", clear);
-
+document.getElementById("delete").addEventListener("click", deleteEntry);
+function deleteEntry() {
+    if(!isResultDisplayed){
+        entry.pop();
+        displayEntry("");
+    }
+}
