@@ -1,6 +1,6 @@
 //OPERATIONS
 function add(numbers) {
-	return +numbers[0] + +numbers[1];
+	return numbers[0] + numbers[1];
 }
 function subtract(numbers) {
 	return numbers[0] - numbers[1];
@@ -19,7 +19,7 @@ function round(number, maxPrecision) {
 function calculate(firstNumber, operator, secondNumber) {
 	switch (operator) {
 		case "/":
-			return secondNumber === "0"
+			return secondNumber === 0
 				? (alert("Can't do that!"), clear())
 				: divide([firstNumber, secondNumber]);
 			break;
@@ -34,26 +34,47 @@ function calculate(firstNumber, operator, secondNumber) {
 			break;
 	}
 }
+// +/- BUTTON
+
+//NEED TO MAKE THIS SUPPORT DOUBLE-DIGIT NUMBERS;
+let answer = null;
+let entry = new Array();
+
+// let negativeToggle = document.getElementById("tog");
+// negativeToggle.addEventListener("click", () => {
+//     let entryGrouped = entry.join("").split(/[/×+\-]/);
+// 	let lastNumber = entryGrouped.pop();
+// 	entry.splice(entry.indexOf(lastNumber) + 1, lastNumber.length);
+// 	lastNumber *= -1;
+// 	console.log(entry);
+// 	console.log(entryGrouped);
+// 	displayEntry(lastNumber);
+// });
 
 //CALCULATION
-let answer = null;
 document.getElementById("calc").addEventListener("click", operate);
 
 function operate() {
 	let operators = [/[×/]/, /[+\-]/];
-	let entryGrouped = entry.join("").split(/([/×+\-])/);
+    let entryGrouped = entry.join("").split(/([/×+\-])/);
+    console.log(`Array: ${entryGrouped.length}`);
 
 	for (let j = 0; j < operators.length; j++) {
 		for (let i = 0; i < entryGrouped.length; i++) {
-			let firstNumber = /[×/+-]/.test(entry[0]) ? answer : entryGrouped[i - 1];
+			let firstNumber = /[×/+\-]/.test(entry[0]) ? answer : entryGrouped[i - 1];
 			let element = entryGrouped[i];
 			let secondNumber = entryGrouped[i + 1];
 			console.log(`Array: ${entryGrouped} OpFirst? ${/[×/+-]/.test(entry[0])}`);
 			if (operators[j].test(element)) {
+				if (entryGrouped[i + 2] == "-") {
+					secondNumber = entryGrouped[i + 3] * -1;
+					entryGrouped.splice(i + 1, 2); //if the operator is follow by "-", the symbol is removed from the array
+				}
+                if(secondNumber === undefined) continue;
 				console.log(
 					`First no: ${firstNumber} Second no: ${secondNumber} Operator: ${element}`
 				);
-				answer = calculate(firstNumber, element, secondNumber);
+				answer = calculate(+firstNumber, element, +secondNumber);
 				entryGrouped.splice(i - 1, 3, answer);
 				i = 0;
 				console.log(`Result of loop: ${answer}`);
@@ -64,7 +85,6 @@ function operate() {
 }
 
 //DISPLAY
-let entry = [];
 function displayEntry(char) {
 	if (entry.length <= 20) {
 		if (char != "") entry.push(char);
@@ -92,7 +112,6 @@ Array.from(allButtons).forEach((button) => {
 	button.addEventListener("click", () => {
 		if (isResultDisplayed) {
 			clearEntry();
-			// if (button.classList[1] == "num") answer = null;
 			isResultDisplayed = false;
 		}
 		displayEntry(button.textContent);
@@ -164,3 +183,12 @@ function deleteEntry() {
 		displayEntry("");
 	}
 }
+
+//TEXT INPUT
+// window.addEventListener('keydown', function(e){
+//     const key = document.querySelector(`button[data-key="${e.key}"]`);
+//     if(key.classList == "key op" || key.classList == "key num" || key.id == "dot"){
+//         displayEntry(key.textContent);
+//         console.log(key.classList);
+//     }
+// });
