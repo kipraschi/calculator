@@ -56,8 +56,8 @@ document.getElementById("calc").addEventListener("click", operate);
 
 function operate() {
 	let operators = [/[×/]/, /[+\-]/];
-    let entryGrouped = entry.join("").split(/([/×+\-])/);
-    console.log(`Array: ${entryGrouped.length}`);
+	let entryGrouped = entry.join("").split(/([/×+\-])/);
+	console.log(`Array: ${entryGrouped.length}`);
 
 	for (let j = 0; j < operators.length; j++) {
 		for (let i = 0; i < entryGrouped.length; i++) {
@@ -70,7 +70,7 @@ function operate() {
 					secondNumber = entryGrouped[i + 3] * -1;
 					entryGrouped.splice(i + 1, 2); //if the operator is follow by "-", the symbol is removed from the array
 				}
-                if(secondNumber === undefined) continue;
+				if (secondNumber === undefined) continue;
 				console.log(
 					`First no: ${firstNumber} Second no: ${secondNumber} Operator: ${element}`
 				);
@@ -163,6 +163,7 @@ function clear() {
 	document.getElementById("result").textContent = "";
 	answer = null;
 	isResultDisplayed = false;
+	displayResult(0);
 	Array.from(allButtons).forEach((button) => {
 		button.disabled = false;
 		button.style.backgroundColor = "";
@@ -178,10 +179,9 @@ function clearEntry() {
 //DELETE
 document.getElementById("delete").addEventListener("click", deleteEntry);
 function deleteEntry() {
-	if (!isResultDisplayed) {
-		entry.pop();
-		displayEntry("");
-	}
+	if (isResultDisplayed) isResultDisplayed = false;
+	entry.pop();
+	displayEntry("");
 }
 
 //TEXT INPUT
