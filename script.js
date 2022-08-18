@@ -1,22 +1,15 @@
 //OPERATIONS
 function add(numbers) {
-	// return numbers.reduce((result, number) => (result += +number), 0);
 	return +numbers[0] + +numbers[1];
 }
 function subtract(numbers) {
-	// return numbers.reduce((result, number) => (result -= +number));
 	return numbers[0] - numbers[1];
 }
 function multiply(numbers) {
 	return numbers[0] * numbers[1];
-	// return numbers.reduce((result, number) => (result *= +number));
 }
 function divide(numbers) {
-	return round(
-		// numbers.reduce((result, number) => (result /= +number)),
-		numbers[0] / numbers[1],
-		10
-	);
+	return round(numbers[0] / numbers[1], 10);
 }
 function round(number, maxPrecision) {
 	return parseFloat(
@@ -26,8 +19,8 @@ function round(number, maxPrecision) {
 function calculate(firstNumber, operator, secondNumber) {
 	switch (operator) {
 		case "/":
-			return secondNumber == 0
-				? alert("Can't do that!")
+			return secondNumber === "0"
+				? (alert("Can't do that!"), clear())
 				: divide([firstNumber, secondNumber]);
 			break;
 		case "×":
@@ -76,14 +69,20 @@ function displayEntry(char) {
 	if (entry.length <= 20) {
 		if (char != "") entry.push(char);
 		document.getElementById("entry").textContent = entry.join("");
-	} else document.getElementById("entry").textContent = "Error";
+	} else document.getElementById("entry").textContent = "Number too long";
 }
 
 let isResultDisplayed = false;
 function displayResult(result) {
-	if (result.toString().length <= 10) {
+	if (result.toString().length <= 12) {
 		document.getElementById("result").textContent = result;
-	} else document.getElementById("result").textContent = "Error";
+	} else {
+		document.getElementById("result").textContent = "Error";
+		setTimeout(() => {
+			alert("Very long number you got there");
+			clear();
+		}, 100);
+	}
 	isResultDisplayed = true;
 }
 
