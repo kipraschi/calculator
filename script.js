@@ -92,7 +92,7 @@ Array.from(allButtons).forEach((button) => {
 	button.addEventListener("click", () => {
 		if (isResultDisplayed) {
 			clearEntry();
-			if (button.classList[1] == "num") answer = null;
+			// if (button.classList[1] == "num") answer = null;
 			isResultDisplayed = false;
 		}
 		displayEntry(button.textContent);
@@ -102,6 +102,7 @@ Array.from(allButtons).forEach((button) => {
 let dotButton = document.getElementById("dot");
 let opButtons = document.getElementsByClassName("key op");
 let numButtons = document.getElementsByClassName("key num");
+let clearButton = document.getElementById("clear");
 
 dotButton.addEventListener("click", () => (dotButton.disabled = true));
 enableButton(dotButton, opButtons);
@@ -128,22 +129,25 @@ function enableButton(disabledButtons, enablers) {
 		);
 	} else {
 		Array.from(enablers).forEach((enabler) =>
-			enabler.addEventListener(
-				"click",
-				() => (disabledButtons.disabled = false)
-			)
+			enabler.addEventListener("click", () => {
+				disabledButtons.disabled = false;
+				disabledButtons.style.backgroundColor = "";
+			})
 		);
 	}
 }
 
 //CLEAR
-document.getElementById("clear").addEventListener("click", clear);
+clearButton.addEventListener("click", clear);
 function clear() {
 	clearEntry();
 	document.getElementById("result").textContent = "";
 	answer = null;
 	isResultDisplayed = false;
-	Array.from(allButtons).forEach((button) => (button.disabled = false));
+	Array.from(allButtons).forEach((button) => {
+		button.disabled = false;
+		button.style.backgroundColor = "";
+	});
 	console.clear();
 }
 
