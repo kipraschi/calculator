@@ -1,20 +1,20 @@
 //OPERATIONS
 function add(numbers) {
-	return numbers.reduce((result, number) => (result += +number), 0);
-	// return +numbers[0] + +numbers[1];
+	// return numbers.reduce((result, number) => (result += +number), 0);
+	return +numbers[0] + +numbers[1];
 }
 function subtract(numbers) {
-	return numbers.reduce((result, number) => (result -= +number));
-	// return numbers[0] - numbers[1];
+	// return numbers.reduce((result, number) => (result -= +number));
+	return numbers[0] - numbers[1];
 }
 function multiply(numbers) {
-	// return numbers[0] * numbers[1];
-	return numbers.reduce((result, number) => (result *= +number));
+	return numbers[0] * numbers[1];
+	// return numbers.reduce((result, number) => (result *= +number));
 }
 function divide(numbers) {
 	return round(
-		numbers.reduce((result, number) => (result /= +number)),
-		// numbers[0] / numbers[1],
+		// numbers.reduce((result, number) => (result /= +number)),
+		numbers[0] / numbers[1],
 		10
 	);
 }
@@ -52,11 +52,14 @@ function operate() {
 
 	for (let j = 0; j < operators.length; j++) {
 		for (let i = 0; i < entryGrouped.length; i++) {
-			let firstNumber = answer === null ? entryGrouped[i - 1] : answer;
+			let firstNumber = /[×/+-]/.test(entry[0]) ? answer : entryGrouped[i - 1];
 			let element = entryGrouped[i];
 			let secondNumber = entryGrouped[i + 1];
-			console.log(`Array: ${entryGrouped}`);
+			console.log(`Array: ${entryGrouped} OpFirst? ${/[×/+-]/.test(entry[0])}`);
 			if (operators[j].test(element)) {
+				console.log(
+					`First no: ${firstNumber} Second no: ${secondNumber} Operator: ${element}`
+				);
 				answer = calculate(firstNumber, element, secondNumber);
 				entryGrouped.splice(i - 1, 3, answer);
 				i = 0;
@@ -97,7 +100,6 @@ Array.from(allButtons).forEach((button) => {
 	});
 });
 
-//disable dot button
 let dotButton = document.getElementById("dot");
 let opButtons = document.getElementsByClassName("key op");
 let numButtons = document.getElementsByClassName("key num");
@@ -143,6 +145,7 @@ function clear() {
 	answer = null;
 	isResultDisplayed = false;
 	Array.from(allButtons).forEach((button) => (button.disabled = false));
+	console.clear();
 }
 
 function clearEntry() {
@@ -153,8 +156,8 @@ function clearEntry() {
 //DELETE
 document.getElementById("delete").addEventListener("click", deleteEntry);
 function deleteEntry() {
-    if(!isResultDisplayed){
-        entry.pop();
-        displayEntry("");
-    }
+	if (!isResultDisplayed) {
+		entry.pop();
+		displayEntry("");
+	}
 }
