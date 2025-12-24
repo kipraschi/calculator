@@ -1,68 +1,69 @@
 const numpad = document.querySelector(".numpad");
 const display = document.querySelector(".display");
 
-let displayContent = [];
 let currentOperation;
 let num1;
 let num2;
+let calcFromResult = false;
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
-const setOperation = (e) => {
-    currentOperation = e.target.textContent;
-    num1 = getNumberOnDisplay();
-};
-
-const getNumberOnDisplay = () => {
-    let num = parseInt(displayContent.join(""));
-    displayContent = [];
-    return num;
-}
-
 const operate = () => {
-    num2 = getNumberOnDisplay();
+    !calcFromResult ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
     switch (currentOperation) {
         case "+":
             updateDisplay(add(num1, num2));
             break;
         case "-":
             updateDisplay(subtract(num1, num2));
-            break;            
+            break;
          case "*":
             updateDisplay(multiply(num1, num2));
             break;
         case "/":
             updateDisplay(divide(num1, num2));
-            break;   
+            break;
         default:
             updateDisplay("N/A");
             break;
     };
+    calcFromResult = true;
 };
 
-const updateDisplay = (str) => {
-    display.textContent = str;
+const setOperation = (e) => {
+    calcFromResult = false;
+    currentOperation = e.target.textContent;
+    num1 = getNumberOnDisplay();
+};
+
+const getNumberOnDisplay = () => {
+    let num = parseFloat(display.textContent);
+    display.textContent = "";
+    return num;
+}
+
+const updateDisplay = (value) => {
+    display.textContent = value;
 };
 
 const allClear = () => {
-    displayContent = [];
     currentOperation = "";
     num1 = "";
-    num2 = ""
-    updateDisplay(displayContent.join(""));
+    num2 = "";
+    updateDisplay("");
+    calcFromResult = false;
 };
 
 const appendValue = (e) => {
-    displayContent.push(e.target.textContent);
-    updateDisplay(displayContent.join(""));
+    if (calcFromResult) allClear();
+    display.textContent += e.target.textContent;
 };
 
 const deleteValue = () => {
-    displayContent.pop();
-    updateDisplay(displayContent.join(""));
+    display.textContent = display.textContent.slice(0, -1);
 };
 
 const addEvent = (button, value) => {
