@@ -1,0 +1,58 @@
+* {
+    font-size: 32px;
+}
+
+body {
+    background-color: #E0CCAD;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator {
+    background-color: #E6E1D1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 400px;
+    height: 600px;
+}
+
+.display {
+    background-color: #c1c1c1;
+    flex: 0 0 100px;
+}
+
+.numpad {
+    background-color: #89BBB3;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+button {
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 25%;
+}
+
+.doubleBtn { 
+    width: 50%;
+}
+
+.number {
+    background-color: #7272AA;
+}
+
+.operator {
+    background-color: #7272AA;
+}
+
+.action {
+    
+}

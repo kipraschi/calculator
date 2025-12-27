@@ -103,18 +103,23 @@ const addEvent = (button, value) => {
     button.addEventListener("click", fn);
 };
 
+const addClass = (button, value) => {
+    if (value == "=" || value == "AC") button.classList.add("doubleBtn");
+} 
+
 (function createButtons() {
     const buttons = 
     ["AC", "DEL", "/", 
     7, 8, 9, "*", 
     4, 5, 6, "+", 
     1, 2, 3, "-",
-    0, ".", "="];
+    ".", 0, "="];
 
     buttons.forEach(value => {
     const button = document.createElement("button");
     button.textContent = value;
     addEvent(button, value);
+    addClass(button, value);
     numpad.appendChild(button);
     });
 })();
