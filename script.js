@@ -99,12 +99,35 @@ const addEvent = (button, value) => {
             fn = appendValue;
             break;
     };
-
     button.addEventListener("click", fn);
 };
 
 const addClass = (button, value) => {
-    if (value == "=" || value == "AC") button.classList.add("doubleBtn");
+    let styleClass = "";
+    switch (value) {
+        case "+":
+        case "-":
+        case "/":
+        case "*":
+            styleClass = "operator";
+            break;
+        case "=":
+            styleClass = "operator";
+            button.classList.add("doubleBtn");
+            break;
+        case "AC":
+            styleClass = "action";
+            button.classList.add("doubleBtn");
+            break;
+        case "DEL":
+            styleClass = "action";
+            break;
+        default:
+            styleClass = "number";
+            break;
+    };
+    button.classList.add(styleClass);
+
 } 
 
 (function createButtons() {
