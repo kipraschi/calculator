@@ -2,16 +2,14 @@ const numpad = document.querySelector(".numpad");
 const display = document.querySelector(".display");
 
 let lastOperator = "";
-let num1;
-let num2;
+let num1 = null;
+let num2 = null;
 let resultDisplayed = false;
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
-const divide = (a, b) => {
-    return b != 0 ? a / b : alert("You can't divide by 0!");
-};
+const divide = (a, b) => a / b;
 
 const operate = () => {
     !resultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
@@ -26,7 +24,13 @@ const operate = () => {
             updateDisplay(multiply(num1, num2));
             break;
         case "/":
-            updateDisplay(divide(num1, num2));
+            if (num2 != 0)
+                updateDisplay(divide(num1, num2));
+            else {
+                alert("You can't divide by 0!");
+                num2 = null;
+                updateDisplay(num1);
+            }
             break;
         default:
             updateDisplay("N/A");
@@ -57,9 +61,9 @@ const updateDisplay = (value) => {
 };
 
 const allClear = () => {
-    lastOperator = "";
-    num1 = "";
-    num2 = "";
+    lastOperator = null;
+    num1 = null;
+    num2 = null;
     updateDisplay("");
     resultDisplayed = false;
 };
