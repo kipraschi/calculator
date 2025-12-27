@@ -4,15 +4,17 @@ const display = document.querySelector(".display");
 let lastOperator = "";
 let num1;
 let num2;
-let calcFromResult = false;
+let resultDisplayed = false;
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+const divide = (a, b) => {
+    return b != 0 ? a / b : alert("You can't divide by 0!");
+};
 
 const operate = () => {
-    !calcFromResult ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
+    !resultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
     switch (lastOperator) {
         case "+":
             updateDisplay(add(num1, num2));
@@ -30,15 +32,15 @@ const operate = () => {
             updateDisplay("N/A");
             break;
     };
-    calcFromResult = true;
+    resultDisplayed = true;
     console.log(num1 + lastOperator + num2);
 };
 
 const setOperation = (e) => {
-    if (lastOperator && !calcFromResult) {
+    if (lastOperator && !resultDisplayed) {
         operate();
     };
-    calcFromResult = false;
+    resultDisplayed = false;
     lastOperator = e.target.textContent;
     num1 = getNumberOnDisplay();
 };
@@ -59,11 +61,11 @@ const allClear = () => {
     num1 = "";
     num2 = "";
     updateDisplay("");
-    calcFromResult = false;
+    resultDisplayed = false;
 };
 
 const appendValue = (e) => {
-    if (calcFromResult) allClear();
+    if (resultDisplayed) allClear();
     display.textContent += e.target.textContent;
 };
 
