@@ -1,7 +1,7 @@
 const numpad = document.querySelector(".numpad");
 const display = document.querySelector(".display");
 
-let currentOperation;
+let lastOperator = "";
 let num1;
 let num2;
 let calcFromResult = false;
@@ -13,7 +13,7 @@ const divide = (a, b) => a / b;
 
 const operate = () => {
     !calcFromResult ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
-    switch (currentOperation) {
+    switch (lastOperator) {
         case "+":
             updateDisplay(add(num1, num2));
             break;
@@ -31,11 +31,15 @@ const operate = () => {
             break;
     };
     calcFromResult = true;
+    console.log(num1 + lastOperator + num2);
 };
 
 const setOperation = (e) => {
+    if (lastOperator && !calcFromResult) {
+        operate();
+    };
     calcFromResult = false;
-    currentOperation = e.target.textContent;
+    lastOperator = e.target.textContent;
     num1 = getNumberOnDisplay();
 };
 
@@ -46,11 +50,12 @@ const getNumberOnDisplay = () => {
 }
 
 const updateDisplay = (value) => {
+    console.log(value);
     display.textContent = value;
 };
 
 const allClear = () => {
-    currentOperation = "";
+    lastOperator = "";
     num1 = "";
     num2 = "";
     updateDisplay("");
