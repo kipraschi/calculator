@@ -12,32 +12,44 @@ const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
 const operate = () => {
+    if (display.textContent == "Err") {
+        allClear();
+        return;
+    }
     !resultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
+    if (!lastOperator || num1 === null || num2 === null || isNaN(num1) || isNaN(num2)) return;
+    let result;
     switch (lastOperator) {
         case "+":
-            updateDisplay(add(num1, num2));
+            result = add(num1, num2);
             break;
         case "-":
-            updateDisplay(subtract(num1, num2));
+            result = subtract(num1, num2);
             break;
          case "*":
-            updateDisplay(multiply(num1, num2));
+            result = multiply(num1, num2);
             break;
         case "/":
-            if (num2 != 0)
-                updateDisplay(divide(num1, num2));
-            else {
+            if (num2 === 0) {
                 alert("You can't divide by 0!");
-                num2 = null;
                 updateDisplay(num1);
+                num2 = null;
+                return;
             }
+            result = divide(num1, num2);
             break;
         default:
-            updateDisplay("N/A");
+            updateDisplay("Err");
             break;
     };
+    const maxNumber = 9999999;
+    result = Math.round(result * 1000000) / 1000000;
+    if (result > maxNumber) {
+        display.textContent = "Err";
+        return;
+    };
+    updateDisplay(result);
     resultDisplayed = true;
-    console.log(num1 + lastOperator + num2);
 };
 
 const setOperation = (e) => {
@@ -56,7 +68,6 @@ const getNumberOnDisplay = () => {
 }
 
 const updateDisplay = (value) => {
-    console.log(value);
     display.textContent = value;
 };
 
@@ -66,11 +77,14 @@ const allClear = () => {
     num2 = null;
     updateDisplay("");
     resultDisplayed = false;
+    document.querySelector(".decimal").disabled = false;
 };
 
 const appendValue = (e) => {
     if (resultDisplayed) allClear();
+    if (display.textContent.length >= 7) return;
     display.textContent += e.target.textContent;
+    if (e.target.textContent == ".") e.target.disabled = true;
 };
 
 const deleteValue = () => {
@@ -122,12 +136,14 @@ const addClass = (button, value) => {
         case "DEL":
             styleClass = "action";
             break;
+        case ".":
+            styleClass = "decimal";
+            break;
         default:
             styleClass = "number";
             break;
     };
     button.classList.add(styleClass);
-
 } 
 
 (function createButtons() {
