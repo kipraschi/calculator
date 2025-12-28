@@ -17,7 +17,7 @@ const operate = () => {
         allClear();
         return;
     }
-    !isResultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
+    isResultDisplayed ? num1 = getNumberOnDisplay() : num2 = getNumberOnDisplay();
     if (!lastOperator || num1 === null || num2 === null || isNaN(num1) || isNaN(num2)) return;
     let result;
     switch (lastOperator) {
@@ -42,13 +42,13 @@ const operate = () => {
         default:
             updateDisplay("Err");
             break;
-    };
+    }
     const maxNumber = 9999999;
     result = Math.round(result * 1000000) / 1000000;
     if (result > maxNumber || result < -maxNumber) {
         display.textContent = "Err";
         return;
-    };
+    }
     updateDisplay(result);
     isResultDisplayed = true;
 };
@@ -56,7 +56,7 @@ const operate = () => {
 const setOperation = (e) => {
     if (lastOperator && !isResultDisplayed) {
         operate();
-    };
+    }
     isResultDisplayed = false;
     lastOperator = e.target.textContent;
     num1 = getNumberOnDisplay();
@@ -68,12 +68,12 @@ const toggleOperatorButton = (e) => {
     const previouslyClicked = document.querySelector(".clicked");
     if (previouslyClicked) previouslyClicked.classList.remove("clicked");
     if (e) e.target.classList.add("clicked");
-}
+};
 
 const getNumberOnDisplay = () => {
     let num = parseFloat(display.textContent);
     return num;
-}
+};
 
 const updateDisplay = (value) => {
     display.textContent = value;
@@ -125,7 +125,7 @@ const addEvent = (button, value) => {
         default:
             fn = appendValue;
             break;
-    };
+    }
     button.addEventListener("click", fn);
 };
 
@@ -155,9 +155,9 @@ const addClass = (button, value) => {
         default:
             styleClass = "number";
             break;
-    };
+    }
     button.classList.add(styleClass);
-} 
+};
 
 (function createButtons() {
     const buttons = 
