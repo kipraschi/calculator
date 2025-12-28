@@ -4,7 +4,8 @@ const display = document.querySelector(".display");
 let lastOperator = "";
 let num1 = null;
 let num2 = null;
-let resultDisplayed = false;
+let isResultDisplayed = false;
+let isOperatorClicked = false;
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
@@ -16,7 +17,7 @@ const operate = () => {
         allClear();
         return;
     }
-    !resultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
+    !isResultDisplayed ? num2 = getNumberOnDisplay() : num1 = getNumberOnDisplay();
     if (!lastOperator || num1 === null || num2 === null || isNaN(num1) || isNaN(num2)) return;
     let result;
     switch (lastOperator) {
@@ -49,18 +50,18 @@ const operate = () => {
         return;
     };
     updateDisplay(result);
-    resultDisplayed = true;
+    isResultDisplayed = true;
 };
 
 const setOperation = (e) => {
-    if (lastOperator && !resultDisplayed) {
+    if (lastOperator && !isResultDisplayed) {
         operate();
     };
-    resultDisplayed = false;
+    isResultDisplayed = false;
     lastOperator = e.target.textContent;
     num1 = getNumberOnDisplay();
-    if (num1 == null) return;
     toggleOperatorButton(e);
+    isOperatorClicked = true;
 };
 
 const toggleOperatorButton = (e) => {
@@ -71,7 +72,6 @@ const toggleOperatorButton = (e) => {
 
 const getNumberOnDisplay = () => {
     let num = parseFloat(display.textContent);
-    display.textContent = "";
     return num;
 }
 
@@ -84,13 +84,17 @@ const allClear = () => {
     num1 = null;
     num2 = null;
     updateDisplay("");
-    resultDisplayed = false;
+    isResultDisplayed = false;
     document.querySelector(".decimal").disabled = false;
     toggleOperatorButton();
 };
 
 const appendValue = (e) => {
-    if (resultDisplayed) allClear();
+    if (isOperatorClicked) {
+        display.textContent = "";
+        isOperatorClicked = false;
+    }
+    if (isResultDisplayed) allClear();
     if (display.textContent.length >= 7) return;
     display.textContent += e.target.textContent;
     if (e.target.textContent == ".") e.target.disabled = true;
