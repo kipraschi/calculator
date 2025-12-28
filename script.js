@@ -45,7 +45,7 @@ const operate = () => {
     };
     const maxNumber = 9999999;
     result = Math.round(result * 1000000) / 1000000;
-    if (result > maxNumber) {
+    if (result > maxNumber || result < -maxNumber) {
         display.textContent = "Err";
         return;
     };
