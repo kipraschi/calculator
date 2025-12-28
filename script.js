@@ -27,7 +27,7 @@ const operate = () => {
         case "-":
             result = subtract(num1, num2);
             break;
-         case "*":
+         case "×":
             result = multiply(num1, num2);
             break;
         case "/":
@@ -120,7 +120,7 @@ const addEvent = (button, value) => {
         case "+":
         case "-":
         case "/":
-        case "*":
+        case "×":
             fn = setOperation;
             break;
         case "=":
@@ -148,7 +148,7 @@ const addClass = (button, value) => {
         case "+":
         case "-":
         case "/":
-        case "*":
+        case "×":
         case "=":
             styleClass = "operator";
             break;
@@ -172,7 +172,7 @@ const addClass = (button, value) => {
 (function createButtons() {
     const buttons = 
     ["AC", "DEL", "/", 
-    7, 8, 9, "*", 
+    7, 8, 9, "×", 
     4, 5, 6, "+", 
     1, 2, 3, "-",
     "+/-", 0, ".", "="];
