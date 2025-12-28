@@ -59,7 +59,15 @@ const setOperation = (e) => {
     resultDisplayed = false;
     lastOperator = e.target.textContent;
     num1 = getNumberOnDisplay();
+    if (num1 == null) return;
+    toggleOperatorButton(e);
 };
+
+const toggleOperatorButton = (e) => {
+    const previouslyClicked = document.querySelector(".clicked");
+    if (previouslyClicked) previouslyClicked.classList.remove("clicked");
+    if (e) e.target.classList.add("clicked");
+}
 
 const getNumberOnDisplay = () => {
     let num = parseFloat(display.textContent);
@@ -78,6 +86,7 @@ const allClear = () => {
     updateDisplay("");
     resultDisplayed = false;
     document.querySelector(".decimal").disabled = false;
+    toggleOperatorButton();
 };
 
 const appendValue = (e) => {
