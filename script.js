@@ -54,6 +54,7 @@ const operate = () => {
 };
 
 const setOperation = (e) => {
+    if (display.textContent === "" || display.textContent === "Err") return;
     if (lastOperator && !isResultDisplayed) {
         operate();
     }
@@ -88,11 +89,11 @@ const updateDisplay = (value) => {
     display.textContent = value;
 };
 
-const allClear = () => {
+function allClear () {
     lastOperator = null;
     num1 = null;
     num2 = null;
-    updateDisplay("");
+    updateDisplay(null);
     isResultDisplayed = false;
     document.querySelector(".decimal").disabled = false;
     toggleOperatorButton();
