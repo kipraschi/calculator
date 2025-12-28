@@ -70,6 +70,15 @@ const toggleOperatorButton = (e) => {
     if (e) e.target.classList.add("clicked");
 };
 
+const toggleSign = () => {
+    if (display.textContent === "" || display.textContent === "Err") return;
+    
+    if (display.textContent.startsWith("-"))
+        display.textContent = display.textContent.slice(1);
+    else
+        display.textContent = "-" + display.textContent;
+};
+
 const getNumberOnDisplay = () => {
     let num = parseFloat(display.textContent);
     return num;
@@ -116,6 +125,9 @@ const addEvent = (button, value) => {
         case "=":
             fn = operate;
             break;
+        case "+/-":
+            fn = toggleSign;
+            break;
         case "AC":
             fn = allClear;
             break;
@@ -136,11 +148,8 @@ const addClass = (button, value) => {
         case "-":
         case "/":
         case "*":
-            styleClass = "operator";
-            break;
         case "=":
             styleClass = "operator";
-            button.classList.add("doubleBtn");
             break;
         case "AC":
             styleClass = "action";
@@ -165,7 +174,7 @@ const addClass = (button, value) => {
     7, 8, 9, "*", 
     4, 5, 6, "+", 
     1, 2, 3, "-",
-    ".", 0, "="];
+    "+/-", 0, ".", "="];
 
     buttons.forEach(value => {
     const button = document.createElement("button");
